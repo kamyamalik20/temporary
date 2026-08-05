@@ -1,0 +1,36 @@
+# NOTE: this file contains secrets (server api_keys). Keep it out of git
+# (add to .gitignore) and set restrictive permissions:
+#   chmod 600 config.yaml
+
+disk_threshold: 85
+check_interval: 60
+
+scan_paths:
+  - /tmp
+  - /var/log
+  - /backup
+
+exclude:
+  - /etc
+  - /usr
+  - /home
+
+# Minimum UID considered a "real" human user account (see app/policy.py
+# check_ownership). Files owned by a UID below this are treated as
+# system/service-owned and are never eligible for AI-recommended cleanup,
+# no matter what directory they're in. 1000 is the standard Debian/Ubuntu
+# and RHEL-family default for the first human account.
+min_human_uid: 1000
+
+# Remote servers this central instance manages. Each one must be running
+# agent/agent_server.py (see RUNBOOK.md). api_key here must exactly match
+# the AGENT_API_KEY environment variable set on that server.
+servers:
+  - name: web-01
+    host: 192.168.1.10
+    port: 8001
+    api_key: "REPLACE_ME_web-01_key"
+  - name: db-01
+    host: 192.168.1.11
+    port: 8001
+    api_key: "REPLACE_ME_db-01_key"
